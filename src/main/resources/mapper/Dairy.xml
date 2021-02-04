@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.dao.DairyDAO">
+    <sql id="table_name">
+        Dairy
+    </sql>
+
+    <sql id="dairyParam">
+        id,title,content,date_format(create_at,'%Y-%m-%d') as create_at,is_show,location,weather
+    </sql>
+
+    <sql id="dairyListByDate">
+        <trim prefixOverrides="and">
+            <if test="startDate!='' and startDate!=null" >
+                create_at &gt; str_to_date(#{startDate}, "%Y-%m-%d")
+            </if>
+            <if test="endDate!='' and endDate!=null">
+                and create_at &lt;= str_to_date(#{endDate}, "%Y-%m-%d")
+            </if>
+        </trim>
+    </sql>
+
+    <sql id="insertContent">
+        (title,content,location,weather) values(#{title},#{content},#{location},#{weather})
+    </sql>
+
+    <resultMap id="dairyDetail" type="com.example.demo.mapper.bo.DairyBO">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="createAt" column="create_at" />
+        <result property="isShow" column="is_show" />
+        <result property="location" column="location" />
+        <result property="weather" column="weather" />
+    </resultMap>
+
+    <select id="getDairyByDate" resultMap="dairyDetail">
+        select
+        <include refid="dairyParam" />
+        from <include refid="table_name" />
+        where <include refid="dairyListByDate" />
+        order by id desc
+        limit ${(page-1) * pageSize},#{pageSize}
+    </select>
+
+    <select id="getDairyTotalByDate" resultType="java.lang.Long">
+        select count(id) as total
+        from <include refid="table_name" />
+        where <include refid="dairyListByDate" />
+    </select>
+
+    <select id="getDairyById" resultMap="dairyDetail">
+        select <include refid="dairyParam" />
+        from <include refid="table_name" />
+        where id=#{id}
+    </select>
+
+    <insert id="insertDairy" parameterType="com.example.demo.mapper.bo.DairyBO" keyProperty="id">
+        insert into
+        <include refid="table_name" />
+        <include refid="insertContent" />
+    </insert>
+
+</mapper>
