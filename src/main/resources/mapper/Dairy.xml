@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.mapper.dao.DairyDAO">
+<mapper namespace="com.example.autumn.mapper.dao.DairyDAO">
     <sql id="table_name">
         Dairy
     </sql>
@@ -24,7 +24,7 @@
         (title,content,location,weather) values(#{title},#{content},#{location},#{weather})
     </sql>
 
-    <resultMap id="dairyDetail" type="com.example.demo.mapper.bo.DairyBO">
+    <resultMap id="dairyDetail" type="com.example.autumn.mapper.bo.DairyBO">
         <id property="id" column="id" />
         <result property="title" column="title" />
         <result property="content" column="content" />
@@ -55,7 +55,7 @@
         where id=#{id}
     </select>
 
-    <insert id="insertDairy" parameterType="com.example.demo.mapper.bo.DairyBO" keyProperty="id">
+    <insert id="insertDairy" parameterType="com.example.autumn.mapper.bo.DairyBO" keyProperty="id">
         insert into
         <include refid="table_name" />
         <include refid="insertContent" />
