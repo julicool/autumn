@@ -1,10 +1,10 @@
 package com.example.autumn.utils;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Order(1)
 public class AopLogs {
+
     @Pointcut("execution(public * com.example.autumn.controller..*.*(..))")
     public void methods(){}
 
@@ -32,11 +33,16 @@ public class AopLogs {
         HttpServletRequest request = attributes.getRequest();
 
         // 打印请求数据
-        log.info("=============== 接收到前端请求，开始打印日志 ===============");
+        log.info("=============== 打印前端请求 ===============");
         log.info("URL:[{}]",request.getRequestURL().toString() + "?" + request.getQueryString());
         log.info("Class_Method：[{}]",joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
 
-        log.info("====================== 日志打印完毕 ======================");
+    }
+
+    @AfterReturning(returning = "object",pointcut = "methods()")
+    public void doAfter(Object object){
+        log.info("=============== 打印后端返回 ===============");
+        log.info("Response:[{}]", JSON.toJSONString(object));
     }
 
 

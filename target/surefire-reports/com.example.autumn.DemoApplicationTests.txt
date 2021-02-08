@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.autumn.DemoApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 25.548 s - in com.example.autumn.DemoApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.435 s - in com.example.autumn.DemoApplicationTests

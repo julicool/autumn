@@ -32,20 +32,17 @@ public class DairtController
     @ApiOperation("添加日记")
     @RequestMapping(value = "/addDairy", method = RequestMethod.POST)
     public Result addDairy(@RequestBody AddDairyDo addDairyDo){
-        log.info("addDairy入参是：{}",addDairyDo);
         return dairyService.addDairy(addDairyDo);
     }
 
     @ApiOperation("获取日记列表")
     @RequestMapping(value = "/getDairy", method = RequestMethod.GET)
     public Result getDairies(@RequestParam(value = "startDate",required = false) String startDate, @RequestParam(value = "endDate") String endDate, @RequestParam(value = "page") Integer page, @RequestParam(value = "pageSize") Integer pageSize){
-        log.info("getDairies入参是{},{},{},{}",startDate,endDate,page,pageSize);
         return dairyService.getDairy(startDate,endDate,page,pageSize);
     }
 
     @RequestMapping(value = "/getDairyById", method = RequestMethod.GET)
     public Result getDairyById(@RequestParam(value = "id") Long id){
-        log.info("getDairyById入参是：{}",id);
         return dairyService.getDairyById(id);
     }
 
