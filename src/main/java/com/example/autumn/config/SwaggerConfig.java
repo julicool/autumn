@@ -33,7 +33,7 @@ public class SwaggerConfig {
                 //通过调用自定义方法apiInfo，获得文档的主要信息
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.demo.controller"))//扫描该包下面的API注解
+                .apis(RequestHandlerSelectors.basePackage("com.example.autumn.controller"))//扫描该包下面的API注解
                 .paths(PathSelectors.any())
                 .build();
     }
